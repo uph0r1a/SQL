@@ -168,3 +168,83 @@ FROM PHONG
 WHERE TENPHONG = N'Kỹ thuật'
     )
 );
+GO
+
+CREATE PROC SP_HELLO
+    @TEN NVARCHAR(50)
+AS
+BEGIN
+    PRINT 'Xin chào' + @ten
+END
+EXEC SP_HELLO N'Tri'
+GO
+
+CREATE PROC SP_TONG
+    @S1 INT,
+    @S2 INT
+AS
+BEGIN
+    DECLARE @TONG INT
+    SET @TONG = @S1 + @S2
+    PRINT 'Tong la: '+ CAST(@TONG AS VARCHAR(10));
+END
+EXEC SP_TONG 10, 20
+GO
+
+CREATE PROC SP_EVENSUM
+    @N INT
+AS
+BEGIN
+    DECLARE @TONG INT
+    WHILE @N > 0
+    BEGIN
+        IF @N % 2 = 0
+        BEGIN
+            SET @TONG = @TONG + @N
+        END
+        SET @N = @N - 1
+    END
+    PRINT 'Tong cac so chan: ' + CAST(@TONG AS VARCHAR(10))
+END
+EXEC SP_EVENSUM 5
+GO
+
+CREATE PROC SP_UCLN
+    @A1 INT,
+    @A2 INT
+AS
+BEGIN
+    DECLARE @SMALL INT
+    IF @A1 > @A2
+    BEGIN
+        SET @SMALL = @A2
+    END
+    ELSE
+    BEGIN
+        SET @SMALL = @A1
+    END
+    WHILE @SMALL > 0
+    BEGIN
+        IF @A1 % @SMALL = 0 AND @A2 % @SMALL = 0
+        BEGIN
+            PRINT 'UCLN: ' + CAST(@SMALL AS VARCHAR(10))
+        END
+        ELSE
+        BEGIN
+            SET @SMALL = @SMALL - 1
+        END
+    END
+END
+EXEC SP_UCLN 12, 6
+GO
+
+CREATE PROC SP_THONGTIN_NV_MA
+    @MANV CHAR(2)
+AS
+BEGIN
+    SELECT *
+    FROM NHANVIEN
+    WHERE MANV = @MANV
+END
+EXEC SP_THONGTIN_NV_MA 01
+GO
